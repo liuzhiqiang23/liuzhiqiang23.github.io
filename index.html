@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阿强 · 个人主页</title>
+<meta name="description" content="阿强 liuzhiqiang23 —— 独立开发者 / AI 工作流玩家 / 微信小程序作者">
+<style>
+  :root {
+    --bg: #070B18;
+    --bg2: #0B1026;
+    --panel: rgba(19, 26, 58, .55);
+    --line: rgba(36, 52, 107, .8);
+    --cyan: #00E5FF;
+    --blue: #2F7FD1;
+    --text: #E7EFFB;
+    --muted: #8CA2CC;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+    overflow-x: hidden;
+  }
+  #stars { position: fixed; inset: 0; z-index: 0; }
+  .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- 头图 ---------- */
+  header { min-height: 92vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+  .avatar {
+    width: 108px; height: 108px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 44px; font-weight: 700; color: #06122A;
+    box-shadow: 0 0 44px rgba(0, 229, 255, .35);
+    margin-bottom: 28px;
+  }
+  h1 { font-size: clamp(30px, 6vw, 52px); letter-spacing: 2px; }
+  h1 .accent { color: var(--cyan); }
+  .type-line { margin-top: 18px; font-size: clamp(16px, 3vw, 22px); color: var(--muted); min-height: 1.6em; }
+  .type-line .cursor { display: inline-block; width: 2px; height: 1.1em; background: var(--cyan); vertical-align: text-bottom; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .hero-btns { margin-top: 34px; display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .btn {
+    padding: 12px 30px; border-radius: 999px; text-decoration: none;
+    font-size: 15px; border: 1px solid var(--line); color: var(--text);
+    background: var(--panel); backdrop-filter: blur(6px);
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+  }
+  .btn:hover { transform: translateY(-2px); border-color: var(--cyan); box-shadow: 0 6px 24px rgba(0, 229, 255, .18); }
+  .btn.primary { background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #06122A; font-weight: 700; border: none; }
+
+  /* ---------- 通用区块 ---------- */
+  section { padding: 84px 0 20px; }
+  h2 { font-size: 26px; margin-bottom: 30px; display: flex; align-items: center; gap: 12px; }
+  h2::before { content: ""; width: 5px; height: 26px; border-radius: 3px; background: linear-gradient(180deg, var(--cyan), var(--blue)); }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+    padding: 24px; backdrop-filter: blur(8px);
+    transition: transform .25s, border-color .25s, box-shadow .25s;
+  }
+  .card:hover { transform: translateY(-4px); border-color: rgba(0, 229, 255, .55); box-shadow: 0 10px 34px rgba(0, 229, 255, .10); }
+
+  /* ---------- 项目 ---------- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .proj .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+  .proj h3 { font-size: 18px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .proj p { color: var(--muted); font-size: 14.5px; line-height: 1.7; }
+  .tag { font-size: 12px; padding: 3px 12px; border-radius: 999px; color: #9FE8FF; background: rgba(0, 229, 255, .08); border: 1px solid rgba(0, 229, 255, .25); }
+  .link-more { display: inline-block; margin-top: 12px; color: var(--cyan); font-size: 14px; text-decoration: none; }
+  .link-more:hover { text-decoration: underline; }
+
+  /* ---------- 技能 ---------- */
+  .skills { display: flex; flex-wrap: wrap; gap: 12px; }
+  .skill { padding: 10px 22px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); font-size: 15px; }
+
+  /* ---------- 数据 ---------- */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
+  .stat { text-align: center; padding: 26px 12px; }
+  .stat .num { font-size: 30px; font-weight: 700; color: var(--cyan); }
+  .stat .label { margin-top: 6px; color: var(--muted); font-size: 13.5px; }
+
+  /* ---------- 联系 ---------- */
+  .contact a { color: var(--cyan); text-decoration: none; }
+  .contact a:hover { text-decoration: underline; }
+  footer { text-align: center; padding: 60px 0 40px; color: var(--muted); font-size: 13.5px; position: relative; z-index: 1; }
+  footer a { color: var(--muted); }
+
+  /* 入场动画 */
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.on { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<div class="wrap">
+  <header>
+    <div class="avatar">强</div>
+    <h1>你好，我是<span class="accent"> 阿强 </span></h1>
+    <div class="type-line"><span id="typed"></span><span class="cursor"></span></div>
+    <p style="margin-top:14px;color:var(--muted);max-width:640px;line-height:1.8">
+      用 AI 工作流把想法做成能跑的东西：微信小程序、剪映自动化、个人网站——<br>
+      相信「独立开发者 + AI」是这个时代最低成本的创新方式。
+    </p>
+    <div class="hero-btns">
+      <a class="btn primary" href="#projects">看我的项目</a>
+      <a class="btn" href="https://github.com/liuzhiqiang23" target="_blank">GitHub</a>
+      <a class="btn" href="https://gitee.com/liu-zhiqiang20030520" target="_blank">Gitee</a>
+    </div>
+  </header>
+
+  <section id="stats" class="reveal">
+    <div class="stats">
+      <div class="card stat"><div class="num">6+</div><div class="label">开源仓库</div></div>
+      <div class="card stat"><div class="num">2</div><div class="label">平台（GitHub / Gitee）</div></div>
+      <div class="card stat"><div class="num">1</div><div class="label">已上线小程序</div></div>
+      <div class="card stat"><div class="num">∞</div><div class="label">想做的事</div></div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>我的项目</h2>
+    <div class="grid">
+      <div class="card proj reveal">
+        <h3>🧊 RuiC Card · 全息 3D 闪卡</h3>
+        <p>Blender + Three.js 流水线生成会动的 3D 全息收藏卡，浏览器直接观看，是我的 GitHub 作品集门面担当。</p>
+        <div class="tag-row"><span class="tag">Three.js</span><span class="tag">Blender</span><span class="tag">可视化</span></div>
+        <a class="link-more" href="https://github.com/liuzhiqiang23" target="_blank">GitHub 主页 →</a>
+      </div>
+      <div class="card proj reveal">
+        <h3>🎬 AI 视频流水线</h3>
+        <p>从截图素材到成片全自动：BGM 节拍检测 + 画面打分自动选段 + pyJianYingDraft 自动建稿，剪映里一键导出。</p>
+        <div class="tag-row"><span class="tag">Python</span><span class="tag">ffmpeg</span><span class="tag">自动化</span></div>
+        <a class="link-more" href="https://www.zhihu.com/people/22-51-45-72" target="_blank">知乎教程 →</a>
+      </div>
+      <div class="card proj reveal">
+        <h3>📱 阿强观影 · 微信小程序</h3>
+        <p>影视资料 + 票务演示 + AI 客服「小影」（RAG + GLM），完成备案走上线流程中，是我最完整的全栈作品。</p>
+        <div class="tag-row"><span class="tag">小程序</span><span class="tag">Spring Boot</span><span class="tag">MySQL</span><span class="tag">AI 客服</span></div>
+      </div>
+      <div class="card proj reveal">
+        <h3>📚 王道 408 考研笔记</h3>
+        <p>数据结构 / 操作系统 / 计组 / 网络的系统化整理，持续更新中，已同步 GitHub 与 Gitee。</p>
+        <div class="tag-row"><span class="tag">笔记</span><span class="tag">考研</span></div>
+        <a class="link-more" href="https://gitee.com/liu-zhiqiang20030520/wangdao-408-notes" target="_blank">Gitee 仓库 →</a>
+      </div>
+      <div class="card proj reveal">
+        <h3>🏭 智能生产系统</h3>
+        <p>生产流程智能化改造的学习与实践仓库，含方案设计与实验记录。</p>
+        <div class="tag-row"><span class="tag">工程实践</span></div>
+        <a class="link-more" href="https://gitee.com/liu-zhiqiang20030520/intelligent-production-system" target="_blank">Gitee 仓库 →</a>
+      </div>
+      <div class="card proj reveal">
+        <h3>🚀 Pentagi 实验笔记 & 小程序部署笔记</h3>
+        <p>AI 多智能体系统 Pentagi 的踩坑记录，以及微信小程序从开发到上线的部署手册。</p>
+        <div class="tag-row"><span class="tag">AI Agent</span><span class="tag">部署</span></div>
+        <a class="link-more" href="https://gitee.com/liu-zhiqiang20030520/pentagi-lab-notes" target="_blank">Gitee 仓库 →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>技术栈</h2>
+    <div class="skills reveal">
+      <span class="skill">Python</span>
+      <span class="skill">Java · Spring Boot</span>
+      <span class="skill">微信小程序</span>
+      <span class="skill">JavaScript · Three.js</span>
+      <span class="skill">MySQL</span>
+      <span class="skill">ffmpeg · 视频工程</span>
+      <span class="skill">剪映自动化</span>
+      <span class="skill">AI 工作流 / RAG</span>
+      <span class="skill">Git · GitHub Actions</span>
+    </div>
+  </section>
+
+  <section id="now">
+    <h2>现在在做</h2>
+    <div class="card reveal" style="line-height:2">
+      🔭 备案审核中——「阿强观影」小程序即将正式上线<br>
+      🤖 给小程序接入 AI 客服（RAG + GLM，已跑通）<br>
+      🎮 计划做一个自己的小游戏（Three.js 网页方向）<br>
+      ✍️ 在知乎写 AI 工作流教程：<a href="https://www.zhihu.com/people/22-51-45-72" target="_blank" style="color:var(--cyan)">@义不艮将</a>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2>找到我</h2>
+    <div class="card reveal" style="line-height:2.4">
+      💻 GitHub：<a href="https://github.com/liuzhiqiang23" target="_blank">github.com/liuzhiqiang23</a><br>
+      🦊 Gitee：<a href="https://gitee.com/liu-zhiqiang20030520" target="_blank">gitee.com/liu-zhiqiang20030520</a><br>
+      📝 知乎：<a href="https://www.zhihu.com/people/22-51-45-72" target="_blank">@义不艮将</a>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 阿强 · 由 VibeCoding 构建 · <a href="https://github.com/liuzhiqiang23/liuzhiqiang23.github.io" target="_blank">本站源码</a>
+  </footer>
+</div>
+
+<script>
+/* ---------- 星空粒子背景 ---------- */
+const cv = document.getElementById("stars"), ctx = cv.getContext("2d");
+let W, H, pts = [];
+function resize() {
+  W = cv.width = innerWidth; H = cv.height = innerHeight;
+  const n = Math.min(130, Math.floor(W * H / 12000));
+  pts = Array.from({ length: n }, () => ({
+    x: Math.random() * W, y: Math.random() * H,
+    vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35,
+    r: Math.random() * 1.6 + .4
+  }));
+}
+resize(); addEventListener("resize", resize);
+(function tick() {
+  ctx.clearRect(0, 0, W, H);
+  for (const p of pts) {
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0 || p.x > W) p.vx *= -1;
+    if (p.y < 0 || p.y > H) p.vy *= -1;
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7);
+    ctx.fillStyle = "rgba(0,229,255,.55)"; ctx.fill();
+  }
+  for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+    const a = pts[i], b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+    if (d < 120) {
+      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+      ctx.strokeStyle = `rgba(0,229,255,${(1 - d / 120) * .18})`; ctx.stroke();
+    }
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ---------- 打字机 ---------- */
+const words = ["独立开发者", "AI 工作流玩家", "微信小程序作者", "视频自动化折腾者", "终身学习者"];
+const el = document.getElementById("typed");
+let wi = 0, ci = 0, del = false;
+(function type() {
+  const w = words[wi];
+  el.textContent = w.slice(0, ci);
+  if (!del && ci < w.length) { ci++; setTimeout(type, 130); }
+  else if (!del) { del = true; setTimeout(type, 1500); }
+  else if (ci > 0) { ci--; setTimeout(type, 55); }
+  else { del = false; wi = (wi + 1) % words.length; setTimeout(type, 350); }
+})();
+
+/* ---------- 滚动入场 ---------- */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); }
+}), { threshold: .12 });
+document.querySelectorAll(".reveal").forEach(x => io.observe(x));
+</script>
+</body>
+</html>
