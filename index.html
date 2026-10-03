@@ -3,159 +3,220 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>阿强 · 个人主页</title>
-<meta name="description" content="阿强 liuzhiqiang23 —— 独立开发者 / AI 工作流玩家 / 微信小程序作者">
+<title>阿强 · 山水间写代码</title>
+<meta name="description" content="阿强 liuzhiqiang23 —— 于山水之间，写人间代码。独立开发者 / 微信小程序作者">
 <style>
   :root {
-    --bg: #070B18;
-    --bg2: #0B1026;
-    --panel: rgba(19, 26, 58, .55);
-    --line: rgba(36, 52, 107, .8);
-    --cyan: #00E5FF;
-    --blue: #2F7FD1;
-    --text: #E7EFFB;
-    --muted: #8CA2CC;
+    --paper: #f4efe4;
+    --paper2: #ece5d3;
+    --ink: #2e2c28;
+    --ink-soft: #6b6558;
+    --mount: #5d6e63;
+    --mount2: #8a9a8b;
+    --gold: #b8894a;
+    --seal: #a83f2e;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Kaiti SC", "STKaiti", "KaiTi", "SimSun", serif;
     overflow-x: hidden;
   }
-  #stars { position: fixed; inset: 0; z-index: 0; }
-  .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  ::selection { background: rgba(168, 63, 46, .18); }
 
-  /* ---------- 头图 ---------- */
-  header { min-height: 92vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-  .avatar {
-    width: 108px; height: 108px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--cyan), var(--blue));
+  /* ---------- 山水头图 ---------- */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; overflow: hidden;
+    background: linear-gradient(180deg, #f7f3e9 0%, #efe8d6 55%, var(--paper2) 100%);
+  }
+  /* 远山层（SVG，三层视差） */
+  .mounts { position: absolute; left: 0; right: 0; bottom: 0; height: 52vh; pointer-events: none; }
+  .mounts svg { position: absolute; bottom: 0; width: 200%; left: -50%; }
+  .m1 { opacity: .16; animation: drift 60s linear infinite alternate; }
+  .m2 { opacity: .30; animation: drift 45s linear infinite alternate-reverse; }
+  .m3 { opacity: .55; }
+  @keyframes drift { from { transform: translateX(0); } to { transform: translateX(6%); } }
+  /* 云雾 */
+  .mist {
+    position: absolute; width: 140%; height: 120px; left: -20%;
+    background: radial-gradient(ellipse at center, rgba(244,239,228,.9), transparent 70%);
+    filter: blur(6px); animation: mistmove 26s ease-in-out infinite alternate;
+  }
+  .mist.a { bottom: 30vh; } .mist.b { bottom: 16vh; animation-delay: -12s; opacity: .8; }
+  @keyframes mistmove { from { transform: translateX(-6%); } to { transform: translateX(6%); } }
+  /* 红日 */
+  .sun {
+    position: absolute; top: 14%; left: 50%; margin-left: -240px;
+    width: 74px; height: 74px; border-radius: 50%;
+    background: radial-gradient(circle at 38% 34%, #c8543c, var(--seal));
+    opacity: .82; box-shadow: 0 0 60px rgba(168, 63, 46, .25);
+  }
+  /* 飞鸟 */
+  .birds { position: absolute; top: 20%; right: 18%; opacity: .5; }
+
+  .hero-inner { position: relative; z-index: 2; padding: 0 24px; }
+  .seal-stamp {
+    width: 92px; height: 92px; margin: 0 auto 30px;
+    border: 3px solid var(--seal); border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 44px; font-weight: 700; color: #06122A;
-    box-shadow: 0 0 44px rgba(0, 229, 255, .35);
-    margin-bottom: 28px;
+    font-size: 38px; color: var(--seal); letter-spacing: 4px;
+    writing-mode: vertical-rl; font-weight: 700;
+    transform: rotate(-3deg); opacity: .85;
+    box-shadow: inset 0 0 0 2px rgba(168,63,46,.15);
   }
-  h1 { font-size: clamp(30px, 6vw, 52px); letter-spacing: 2px; }
-  h1 .accent { color: var(--cyan); }
-  .type-line { margin-top: 18px; font-size: clamp(16px, 3vw, 22px); color: var(--muted); min-height: 1.6em; }
-  .type-line .cursor { display: inline-block; width: 2px; height: 1.1em; background: var(--cyan); vertical-align: text-bottom; animation: blink 1s steps(1) infinite; }
+  h1 { font-size: clamp(34px, 6.4vw, 58px); letter-spacing: 8px; font-weight: 400; }
+  h1 b { color: var(--seal); font-weight: 700; }
+  .type-line { margin-top: 22px; font-size: clamp(17px, 3vw, 23px); color: var(--ink-soft); min-height: 1.7em; letter-spacing: 2px; }
+  .type-line .cursor { display: inline-block; width: 1px; height: 1.15em; background: var(--ink-soft); vertical-align: text-bottom; animation: blink 1.1s steps(1) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
-  .hero-btns { margin-top: 34px; display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .hero-poem { margin-top: 16px; color: var(--ink-soft); opacity: .75; letter-spacing: 5px; font-size: 15px; }
+  .hero-btns { margin-top: 38px; display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; }
   .btn {
-    padding: 12px 30px; border-radius: 999px; text-decoration: none;
-    font-size: 15px; border: 1px solid var(--line); color: var(--text);
-    background: var(--panel); backdrop-filter: blur(6px);
-    transition: transform .2s, border-color .2s, box-shadow .2s;
+    padding: 12px 32px; text-decoration: none; font-size: 16px;
+    color: var(--ink); border: 1px solid var(--ink-soft); border-radius: 4px;
+    background: transparent; letter-spacing: 3px;
+    transition: all .25s;
   }
-  .btn:hover { transform: translateY(-2px); border-color: var(--cyan); box-shadow: 0 6px 24px rgba(0, 229, 255, .18); }
-  .btn.primary { background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #06122A; font-weight: 700; border: none; }
+  .btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .btn.primary:hover { background: var(--seal); border-color: var(--seal); }
+  .scroll-hint { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); color: var(--ink-soft); font-size: 13px; letter-spacing: 3px; opacity: .7; z-index: 2; }
 
-  /* ---------- 通用区块 ---------- */
-  section { padding: 84px 0 20px; }
-  h2 { font-size: 26px; margin-bottom: 30px; display: flex; align-items: center; gap: 12px; }
-  h2::before { content: ""; width: 5px; height: 26px; border-radius: 3px; background: linear-gradient(180deg, var(--cyan), var(--blue)); }
+  /* ---------- 通用 ---------- */
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 0 26px; }
+  section { padding: 90px 0 30px; }
+  .sec-head { text-align: center; margin-bottom: 46px; }
+  .sec-head .zh { font-size: 30px; letter-spacing: 10px; }
+  .sec-head .en { margin-top: 8px; font-size: 12.5px; color: var(--ink-soft); opacity: .6; letter-spacing: 4px; }
+  .sec-head .brush {
+    width: 64px; height: 4px; margin: 16px auto 0; border-radius: 2px;
+    background: linear-gradient(90deg, transparent, var(--seal), transparent);
+  }
   .card {
-    background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
-    padding: 24px; backdrop-filter: blur(8px);
-    transition: transform .25s, border-color .25s, box-shadow .25s;
+    background: rgba(255, 252, 245, .72);
+    border: 1px solid rgba(107, 101, 88, .28); border-radius: 8px;
+    padding: 26px 28px; position: relative;
+    transition: transform .3s, box-shadow .3s;
+    box-shadow: 0 2px 14px rgba(60, 55, 40, .05);
   }
-  .card:hover { transform: translateY(-4px); border-color: rgba(0, 229, 255, .55); box-shadow: 0 10px 34px rgba(0, 229, 255, .10); }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 12px 34px rgba(60, 55, 40, .13); }
+  .card .corner-seal {
+    position: absolute; top: 14px; right: 16px; width: 30px; height: 30px;
+    border: 1.5px solid rgba(168, 63, 46, .55); border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(168, 63, 46, .75); font-size: 13px; transform: rotate(4deg);
+  }
 
-  /* ---------- 项目 ---------- */
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-  .proj .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
-  .proj h3 { font-size: 18px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-  .proj p { color: var(--muted); font-size: 14.5px; line-height: 1.7; }
-  .tag { font-size: 12px; padding: 3px 12px; border-radius: 999px; color: #9FE8FF; background: rgba(0, 229, 255, .08); border: 1px solid rgba(0, 229, 255, .25); }
-  .link-more { display: inline-block; margin-top: 12px; color: var(--cyan); font-size: 14px; text-decoration: none; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 22px; }
+  .proj h3 { font-size: 19px; margin-bottom: 10px; letter-spacing: 1px; }
+  .proj p { color: var(--ink-soft); font-size: 14.5px; line-height: 1.9; }
+  .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+  .tag { font-size: 12px; padding: 3px 12px; border-radius: 3px; color: var(--mount); background: rgba(93, 110, 99, .08); border: 1px solid rgba(93, 110, 99, .3); letter-spacing: 1px; }
+  .link-more { display: inline-block; margin-top: 12px; color: var(--seal); font-size: 14px; text-decoration: none; letter-spacing: 1px; }
   .link-more:hover { text-decoration: underline; }
 
-  /* ---------- 技能 ---------- */
-  .skills { display: flex; flex-wrap: wrap; gap: 12px; }
-  .skill { padding: 10px 22px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); font-size: 15px; }
+  .skills { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .skill { padding: 10px 24px; border: 1px solid rgba(107,101,88,.35); border-radius: 4px; font-size: 15.5px; letter-spacing: 2px; background: rgba(255,252,245,.6); transition: all .25s; }
+  .skill:hover { background: var(--ink); color: var(--paper); }
 
-  /* ---------- 数据 ---------- */
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
-  .stat { text-align: center; padding: 26px 12px; }
-  .stat .num { font-size: 30px; font-weight: 700; color: var(--cyan); }
-  .stat .label { margin-top: 6px; color: var(--muted); font-size: 13.5px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; }
+  .stat { text-align: center; padding: 30px 12px; }
+  .stat .num { font-size: 32px; color: var(--seal); }
+  .stat .label { margin-top: 8px; color: var(--ink-soft); font-size: 14px; letter-spacing: 2px; }
 
-  /* ---------- 联系 ---------- */
-  .contact a { color: var(--cyan); text-decoration: none; }
-  .contact a:hover { text-decoration: underline; }
-  footer { text-align: center; padding: 60px 0 40px; color: var(--muted); font-size: 13.5px; position: relative; z-index: 1; }
-  footer a { color: var(--muted); }
+  .plain { line-height: 2.2; letter-spacing: 1px; }
+  .plain a { color: var(--seal); text-decoration: none; }
+  .plain a:hover { text-decoration: underline; }
 
-  /* 入场动画 */
-  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+  footer { text-align: center; padding: 70px 20px 46px; color: var(--ink-soft); font-size: 14px; letter-spacing: 2px; }
+  footer .poem { font-size: 16.5px; color: var(--mount); margin-bottom: 14px; letter-spacing: 6px; }
+  footer a { color: var(--ink-soft); }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
   .reveal.on { opacity: 1; transform: none; }
 </style>
 </head>
 <body>
-<canvas id="stars"></canvas>
 
-<div class="wrap">
-  <header>
-    <div class="avatar">强</div>
-    <h1>你好，我是<span class="accent"> 阿强 </span></h1>
+<header class="hero">
+  <div class="sun"></div>
+  <div class="mist a"></div><div class="mist b"></div>
+  <!-- 三层远山 -->
+  <div class="mounts">
+    <svg class="m1" viewBox="0 0 1440 320" preserveAspectRatio="none" style="height:100%"><path fill="#5d6e63" d="M0,224 C120,150 260,120 420,170 C560,214 660,110 820,140 C980,170 1080,90 1240,130 C1340,155 1400,190 1440,205 L1440,320 L0,320 Z"/></svg>
+    <svg class="m2" viewBox="0 0 1440 320" preserveAspectRatio="none" style="height:72%"><path fill="#5d6e63" d="M0,240 C160,160 300,150 460,200 C620,250 760,130 940,180 C1100,225 1240,150 1440,210 L1440,320 L0,320 Z"/></svg>
+    <svg class="m3" viewBox="0 0 1440 320" preserveAspectRatio="none" style="height:46%"><path fill="#413f38" d="M0,260 C180,190 340,200 520,250 C700,300 860,190 1060,240 C1220,280 1360,230 1440,260 L1440,320 L0,320 Z"/></svg>
+  </div>
+  <!-- 飞鸟 -->
+  <svg class="birds" width="120" height="40" viewBox="0 0 120 40">
+    <path d="M5,20 Q12,12 19,20 Q26,12 33,20" fill="none" stroke="#413f38" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M55,10 Q60,4 65,10 Q70,4 75,10" fill="none" stroke="#413f38" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M85,28 Q89,23 93,28 Q97,23 101,28" fill="none" stroke="#413f38" stroke-width="1.2" stroke-linecap="round"/>
+  </svg>
+
+  <div class="hero-inner">
+    <div class="seal-stamp">阿强</div>
+    <h1>于山水之间<b>，</b>写人间代码</h1>
     <div class="type-line"><span id="typed"></span><span class="cursor"></span></div>
-    <p style="margin-top:14px;color:var(--muted);max-width:640px;line-height:1.8">
-      用 AI 工作流把想法做成能跑的东西：微信小程序、剪映自动化、个人网站——<br>
-      相信「独立开发者 + AI」是这个时代最低成本的创新方式。
-    </p>
+    <p class="hero-poem">独立开发 · 步履不停</p>
     <div class="hero-btns">
-      <a class="btn primary" href="#projects">看我的项目</a>
+      <a class="btn primary" href="#projects">观我所造</a>
       <a class="btn" href="https://github.com/liuzhiqiang23" target="_blank">GitHub</a>
       <a class="btn" href="https://gitee.com/liu-zhiqiang20030520" target="_blank">Gitee</a>
     </div>
-  </header>
+  </div>
+  <div class="scroll-hint">▼ 缓缓向下 ▼</div>
+</header>
 
+<div class="wrap">
   <section id="stats" class="reveal">
     <div class="stats">
-      <div class="card stat"><div class="num">6+</div><div class="label">开源仓库</div></div>
-      <div class="card stat"><div class="num">2</div><div class="label">平台（GitHub / Gitee）</div></div>
-      <div class="card stat"><div class="num">1</div><div class="label">已上线小程序</div></div>
-      <div class="card stat"><div class="num">∞</div><div class="label">想做的事</div></div>
+      <div class="card stat"><div class="num">六</div><div class="label">开源仓库</div></div>
+      <div class="card stat"><div class="num">二</div><div class="label">平台同耕</div></div>
+      <div class="card stat"><div class="num">一</div><div class="label">小程序上线在途</div></div>
+      <div class="card stat"><div class="num">无涯</div><div class="label">学海与远山</div></div>
     </div>
   </section>
 
   <section id="projects">
-    <h2>我的项目</h2>
+    <div class="sec-head reveal"><div class="zh">所造之物</div><div class="en">PROJECTS</div><div class="brush"></div></div>
     <div class="grid">
-      <div class="card proj reveal">
+      <div class="card proj reveal"><span class="corner-seal">影</span>
         <h3>🧊 RuiC Card · 全息 3D 闪卡</h3>
-        <p>Blender + Three.js 流水线生成会动的 3D 全息收藏卡，浏览器直接观看，是我的 GitHub 作品集门面担当。</p>
+        <p>照片拆解四层，入 Blender 铸成会动的全息收藏卡，Three.js 呈于浏览器——方寸之间，亦有光影山河。</p>
         <div class="tag-row"><span class="tag">Three.js</span><span class="tag">Blender</span><span class="tag">可视化</span></div>
         <a class="link-more" href="https://github.com/liuzhiqiang23" target="_blank">GitHub 主页 →</a>
       </div>
-      <div class="card proj reveal">
+      <div class="card proj reveal"><span class="corner-seal">剪</span>
         <h3>🎬 AI 视频流水线</h3>
-        <p>从截图素材到成片全自动：BGM 节拍检测 + 画面打分自动选段 + pyJianYingDraft 自动建稿，剪映里一键导出。</p>
+        <p>听音辨节拍，观画识精彩——BGM 节奏检测加画面打分，自动选段建稿，剪映里一键成片，如山溪顺流而下。</p>
         <div class="tag-row"><span class="tag">Python</span><span class="tag">ffmpeg</span><span class="tag">自动化</span></div>
         <a class="link-more" href="https://www.zhihu.com/people/22-51-45-72" target="_blank">知乎教程 →</a>
       </div>
-      <div class="card proj reveal">
+      <div class="card proj reveal"><span class="corner-seal">观</span>
         <h3>📱 阿强观影 · 微信小程序</h3>
-        <p>影视资料 + 票务演示 + AI 客服「小影」（RAG + GLM），完成备案走上线流程中，是我最完整的全栈作品。</p>
-        <div class="tag-row"><span class="tag">小程序</span><span class="tag">Spring Boot</span><span class="tag">MySQL</span><span class="tag">AI 客服</span></div>
+        <p>万部影片藏于一屏，AI 客服「小影」应答如流。全栈之作，备案审核中，静待花开。</p>
+        <div class="tag-row"><span class="tag">小程序</span><span class="tag">Spring Boot</span><span class="tag">AI 客服</span></div>
       </div>
-      <div class="card proj reveal">
+      <div class="card proj reveal"><span class="corner-seal">书</span>
         <h3>📚 王道 408 考研笔记</h3>
-        <p>数据结构 / 操作系统 / 计组 / 网络的系统化整理，持续更新中，已同步 GitHub 与 Gitee。</p>
+        <p>数据结构、操作系统、计组、网络，一笔一画皆是来路；笔记如灯，照后来人。</p>
         <div class="tag-row"><span class="tag">笔记</span><span class="tag">考研</span></div>
         <a class="link-more" href="https://gitee.com/liu-zhiqiang20030520/wangdao-408-notes" target="_blank">Gitee 仓库 →</a>
       </div>
-      <div class="card proj reveal">
+      <div class="card proj reveal"><span class="corner-seal">工</span>
         <h3>🏭 智能生产系统</h3>
-        <p>生产流程智能化改造的学习与实践仓库，含方案设计与实验记录。</p>
+        <p>以代码点化车间流程，方案与实验记录并存，学以致用的小小尝试。</p>
         <div class="tag-row"><span class="tag">工程实践</span></div>
         <a class="link-more" href="https://gitee.com/liu-zhiqiang20030520/intelligent-production-system" target="_blank">Gitee 仓库 →</a>
       </div>
-      <div class="card proj reveal">
-        <h3>🚀 Pentagi 实验笔记 & 小程序部署笔记</h3>
-        <p>AI 多智能体系统 Pentagi 的踩坑记录，以及微信小程序从开发到上线的部署手册。</p>
+      <div class="card proj reveal"><span class="corner-seal">记</span>
+        <h3>🚀 Pentagi 笔记 · 部署手册</h3>
+        <p>多智能体系统的踩坑实录，与小程序从开发到上线的部署心得，字字皆是来时路。</p>
         <div class="tag-row"><span class="tag">AI Agent</span><span class="tag">部署</span></div>
         <a class="link-more" href="https://gitee.com/liu-zhiqiang20030520/pentagi-lab-notes" target="_blank">Gitee 仓库 →</a>
       </div>
@@ -163,88 +224,57 @@
   </section>
 
   <section id="skills">
-    <h2>技术栈</h2>
+    <div class="sec-head reveal"><div class="zh">所习之技</div><div class="en">SKILLS</div><div class="brush"></div></div>
     <div class="skills reveal">
       <span class="skill">Python</span>
       <span class="skill">Java · Spring Boot</span>
       <span class="skill">微信小程序</span>
-      <span class="skill">JavaScript · Three.js</span>
+      <span class="skill">Three.js</span>
       <span class="skill">MySQL</span>
-      <span class="skill">ffmpeg · 视频工程</span>
+      <span class="skill">ffmpeg 视频工程</span>
       <span class="skill">剪映自动化</span>
-      <span class="skill">AI 工作流 / RAG</span>
-      <span class="skill">Git · GitHub Actions</span>
+      <span class="skill">AI 工作流 · RAG</span>
+      <span class="skill">Git</span>
     </div>
   </section>
 
   <section id="now">
-    <h2>现在在做</h2>
-    <div class="card reveal" style="line-height:2">
-      🔭 备案审核中——「阿强观影」小程序即将正式上线<br>
-      🤖 给小程序接入 AI 客服（RAG + GLM，已跑通）<br>
-      🎮 计划做一个自己的小游戏（Three.js 网页方向）<br>
-      ✍️ 在知乎写 AI 工作流教程：<a href="https://www.zhihu.com/people/22-51-45-72" target="_blank" style="color:var(--cyan)">@义不艮将</a>
+    <div class="sec-head reveal"><div class="zh">当下之事</div><div class="en">NOW</div><div class="brush"></div></div>
+    <div class="card plain reveal">
+      🌙 小程序备案审核中，「阿强观影」静待上线<br>
+      🍵 AI 客服已通，RAG 为骨，GLM 为声<br>
+      ⛰️ 想做一款自己的小游戏，如造一座纸上园林<br>
+      ✍️ 知乎写文记路：<a href="https://www.zhihu.com/people/22-51-45-72" target="_blank">@义不艮将</a>
     </div>
   </section>
 
-  <section id="contact" class="contact">
-    <h2>找到我</h2>
-    <div class="card reveal" style="line-height:2.4">
-      💻 GitHub：<a href="https://github.com/liuzhiqiang23" target="_blank">github.com/liuzhiqiang23</a><br>
+  <section id="contact">
+    <div class="sec-head reveal"><div class="zh">寻我</div><div class="en">CONTACT</div><div class="brush"></div></div>
+    <div class="card plain reveal">
+      🖋 GitHub：<a href="https://github.com/liuzhiqiang23" target="_blank">github.com/liuzhiqiang23</a><br>
       🦊 Gitee：<a href="https://gitee.com/liu-zhiqiang20030520" target="_blank">gitee.com/liu-zhiqiang20030520</a><br>
-      📝 知乎：<a href="https://www.zhihu.com/people/22-51-45-72" target="_blank">@义不艮将</a>
+      📜 知乎：<a href="https://www.zhihu.com/people/22-51-45-72" target="_blank">@义不艮将</a>
     </div>
   </section>
 
   <footer>
-    © 2026 阿强 · 由 VibeCoding 构建 · <a href="https://github.com/liuzhiqiang23/liuzhiqiang23.github.io" target="_blank">本站源码</a>
+    <div class="poem">行到水穷处，坐看云起时</div>
+    © 2026 阿强 · 山水间写代码 · <a href="https://github.com/liuzhiqiang23/liuzhiqiang23.github.io" target="_blank">本站源码</a>
   </footer>
 </div>
 
 <script>
-/* ---------- 星空粒子背景 ---------- */
-const cv = document.getElementById("stars"), ctx = cv.getContext("2d");
-let W, H, pts = [];
-function resize() {
-  W = cv.width = innerWidth; H = cv.height = innerHeight;
-  const n = Math.min(130, Math.floor(W * H / 12000));
-  pts = Array.from({ length: n }, () => ({
-    x: Math.random() * W, y: Math.random() * H,
-    vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35,
-    r: Math.random() * 1.6 + .4
-  }));
-}
-resize(); addEventListener("resize", resize);
-(function tick() {
-  ctx.clearRect(0, 0, W, H);
-  for (const p of pts) {
-    p.x += p.vx; p.y += p.vy;
-    if (p.x < 0 || p.x > W) p.vx *= -1;
-    if (p.y < 0 || p.y > H) p.vy *= -1;
-    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7);
-    ctx.fillStyle = "rgba(0,229,255,.55)"; ctx.fill();
-  }
-  for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
-    const a = pts[i], b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y);
-    if (d < 120) {
-      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
-      ctx.strokeStyle = `rgba(0,229,255,${(1 - d / 120) * .18})`; ctx.stroke();
-    }
-  }
-  requestAnimationFrame(tick);
-})();
-
-/* ---------- 打字机 ---------- */
-const words = ["独立开发者", "AI 工作流玩家", "微信小程序作者", "视频自动化折腾者", "终身学习者"];
+/* ---------- 打字机（诗意短句） ---------- */
+const words = ["独立开发者", "AI 工作流玩家", "微信小程序作者", "视频自动化折腾者", "把想法磨成作品的人"];
 const el = document.getElementById("typed");
 let wi = 0, ci = 0, del = false;
 (function type() {
   const w = words[wi];
   el.textContent = w.slice(0, ci);
-  if (!del && ci < w.length) { ci++; setTimeout(type, 130); }
-  else if (!del) { del = true; setTimeout(type, 1500); }
-  else if (ci > 0) { ci--; setTimeout(type, 55); }
-  else { del = false; wi = (wi + 1) % words.length; setTimeout(type, 350); }
+  if (!del && ci < w.length) { ci++; setTimeout(type, 150); }
+  else if (!del) { del = true; setTimeout(type, 1600); }
+  else if (ci > 0) { ci--; setTimeout(type, 60); }
+  else { del = false; wi = (wi + 1) % words.length; setTimeout(type, 400); }
 })();
 
 /* ---------- 滚动入场 ---------- */
